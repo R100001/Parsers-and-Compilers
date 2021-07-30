@@ -1,0 +1,6 @@
+start simple6
+(x (+. 3 (floor 3.9)))
+(print x)
+(y (- 3 (floor 3)))
+(print y)
+end

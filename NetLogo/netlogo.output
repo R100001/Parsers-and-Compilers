@@ -1,0 +1,467 @@
+Grammar
+
+    0 $accept: PDefinitions $end
+
+    1 PDefinitions: PDef PDefinitions
+    2             | %empty
+
+    3 PDef: "to" ProcFunN Body "end"
+    4     | "to-report" ProcFunN Body "end"
+
+    5 ProcFunN: T_NAME
+    6         | T_NAME '[' Vars ']'
+
+    7 Vars: T_VAR
+    8     | Vars T_VAR
+
+    9 Body: Command
+   10     | Command Body
+
+   11 Command: "if" Call '[' Body ']'
+   12        | "report" T_VAR
+   13        | "report" T_NUM
+   14        | Call
+   15        | T_VAR '=' T_NUM
+
+   16 Call: '(' T_NAME Args ')'
+
+   17 Args: T_VAR Args
+   18     | T_NUM Args
+   19     | Call Args
+   20     | %empty
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '(' (40) 16
+    ')' (41) 16
+    '=' (61) 15
+    '[' (91) 6 11
+    ']' (93) 6 11
+    error (256)
+    "to" (258) 3
+    "to-report" (259) 4
+    "end" (260) 3 4
+    "if" (261) 11
+    "report" (262) 12 13
+    T_NAME (263) 5 6 16
+    T_VAR (264) 7 8 12 15 17
+    T_NUM (265) 13 15 18
+
+
+Nonterminals, with rules where they appear
+
+    $accept (16)
+        on left: 0
+    PDefinitions (17)
+        on left: 1 2
+        on right: 0 1
+    PDef (18)
+        on left: 3 4
+        on right: 1
+    ProcFunN (19)
+        on left: 5 6
+        on right: 3 4
+    Vars (20)
+        on left: 7 8
+        on right: 6 8
+    Body (21)
+        on left: 9 10
+        on right: 3 4 10 11
+    Command (22)
+        on left: 11 12 13 14 15
+        on right: 9 10
+    Call (23)
+        on left: 16
+        on right: 11 14 19
+    Args (24)
+        on left: 17 18 19 20
+        on right: 16 17 18 19
+
+
+State 0
+
+    0 $accept: . PDefinitions $end
+
+    "to"         shift, and go to state 1
+    "to-report"  shift, and go to state 2
+
+    $default  reduce using rule 2 (PDefinitions)
+
+    PDefinitions  go to state 3
+    PDef          go to state 4
+
+
+State 1
+
+    3 PDef: "to" . ProcFunN Body "end"
+
+    T_NAME  shift, and go to state 5
+
+    ProcFunN  go to state 6
+
+
+State 2
+
+    4 PDef: "to-report" . ProcFunN Body "end"
+
+    T_NAME  shift, and go to state 5
+
+    ProcFunN  go to state 7
+
+
+State 3
+
+    0 $accept: PDefinitions . $end
+
+    $end  shift, and go to state 8
+
+
+State 4
+
+    1 PDefinitions: PDef . PDefinitions
+
+    "to"         shift, and go to state 1
+    "to-report"  shift, and go to state 2
+
+    $default  reduce using rule 2 (PDefinitions)
+
+    PDefinitions  go to state 9
+    PDef          go to state 4
+
+
+State 5
+
+    5 ProcFunN: T_NAME .
+    6         | T_NAME . '[' Vars ']'
+
+    '['  shift, and go to state 10
+
+    $default  reduce using rule 5 (ProcFunN)
+
+
+State 6
+
+    3 PDef: "to" ProcFunN . Body "end"
+
+    "if"      shift, and go to state 11
+    "report"  shift, and go to state 12
+    '('       shift, and go to state 13
+    T_VAR     shift, and go to state 14
+
+    Body     go to state 15
+    Command  go to state 16
+    Call     go to state 17
+
+
+State 7
+
+    4 PDef: "to-report" ProcFunN . Body "end"
+
+    "if"      shift, and go to state 11
+    "report"  shift, and go to state 12
+    '('       shift, and go to state 13
+    T_VAR     shift, and go to state 14
+
+    Body     go to state 18
+    Command  go to state 16
+    Call     go to state 17
+
+
+State 8
+
+    0 $accept: PDefinitions $end .
+
+    $default  accept
+
+
+State 9
+
+    1 PDefinitions: PDef PDefinitions .
+
+    $default  reduce using rule 1 (PDefinitions)
+
+
+State 10
+
+    6 ProcFunN: T_NAME '[' . Vars ']'
+
+    T_VAR  shift, and go to state 19
+
+    Vars  go to state 20
+
+
+State 11
+
+   11 Command: "if" . Call '[' Body ']'
+
+    '('  shift, and go to state 13
+
+    Call  go to state 21
+
+
+State 12
+
+   12 Command: "report" . T_VAR
+   13        | "report" . T_NUM
+
+    T_VAR  shift, and go to state 22
+    T_NUM  shift, and go to state 23
+
+
+State 13
+
+   16 Call: '(' . T_NAME Args ')'
+
+    T_NAME  shift, and go to state 24
+
+
+State 14
+
+   15 Command: T_VAR . '=' T_NUM
+
+    '='  shift, and go to state 25
+
+
+State 15
+
+    3 PDef: "to" ProcFunN Body . "end"
+
+    "end"  shift, and go to state 26
+
+
+State 16
+
+    9 Body: Command .
+   10     | Command . Body
+
+    "if"      shift, and go to state 11
+    "report"  shift, and go to state 12
+    '('       shift, and go to state 13
+    T_VAR     shift, and go to state 14
+
+    $default  reduce using rule 9 (Body)
+
+    Body     go to state 27
+    Command  go to state 16
+    Call     go to state 17
+
+
+State 17
+
+   14 Command: Call .
+
+    $default  reduce using rule 14 (Command)
+
+
+State 18
+
+    4 PDef: "to-report" ProcFunN Body . "end"
+
+    "end"  shift, and go to state 28
+
+
+State 19
+
+    7 Vars: T_VAR .
+
+    $default  reduce using rule 7 (Vars)
+
+
+State 20
+
+    6 ProcFunN: T_NAME '[' Vars . ']'
+    8 Vars: Vars . T_VAR
+
+    ']'    shift, and go to state 29
+    T_VAR  shift, and go to state 30
+
+
+State 21
+
+   11 Command: "if" Call . '[' Body ']'
+
+    '['  shift, and go to state 31
+
+
+State 22
+
+   12 Command: "report" T_VAR .
+
+    $default  reduce using rule 12 (Command)
+
+
+State 23
+
+   13 Command: "report" T_NUM .
+
+    $default  reduce using rule 13 (Command)
+
+
+State 24
+
+   16 Call: '(' T_NAME . Args ')'
+
+    '('    shift, and go to state 13
+    T_VAR  shift, and go to state 32
+    T_NUM  shift, and go to state 33
+
+    $default  reduce using rule 20 (Args)
+
+    Call  go to state 34
+    Args  go to state 35
+
+
+State 25
+
+   15 Command: T_VAR '=' . T_NUM
+
+    T_NUM  shift, and go to state 36
+
+
+State 26
+
+    3 PDef: "to" ProcFunN Body "end" .
+
+    $default  reduce using rule 3 (PDef)
+
+
+State 27
+
+   10 Body: Command Body .
+
+    $default  reduce using rule 10 (Body)
+
+
+State 28
+
+    4 PDef: "to-report" ProcFunN Body "end" .
+
+    $default  reduce using rule 4 (PDef)
+
+
+State 29
+
+    6 ProcFunN: T_NAME '[' Vars ']' .
+
+    $default  reduce using rule 6 (ProcFunN)
+
+
+State 30
+
+    8 Vars: Vars T_VAR .
+
+    $default  reduce using rule 8 (Vars)
+
+
+State 31
+
+   11 Command: "if" Call '[' . Body ']'
+
+    "if"      shift, and go to state 11
+    "report"  shift, and go to state 12
+    '('       shift, and go to state 13
+    T_VAR     shift, and go to state 14
+
+    Body     go to state 37
+    Command  go to state 16
+    Call     go to state 17
+
+
+State 32
+
+   17 Args: T_VAR . Args
+
+    '('    shift, and go to state 13
+    T_VAR  shift, and go to state 32
+    T_NUM  shift, and go to state 33
+
+    $default  reduce using rule 20 (Args)
+
+    Call  go to state 34
+    Args  go to state 38
+
+
+State 33
+
+   18 Args: T_NUM . Args
+
+    '('    shift, and go to state 13
+    T_VAR  shift, and go to state 32
+    T_NUM  shift, and go to state 33
+
+    $default  reduce using rule 20 (Args)
+
+    Call  go to state 34
+    Args  go to state 39
+
+
+State 34
+
+   19 Args: Call . Args
+
+    '('    shift, and go to state 13
+    T_VAR  shift, and go to state 32
+    T_NUM  shift, and go to state 33
+
+    $default  reduce using rule 20 (Args)
+
+    Call  go to state 34
+    Args  go to state 40
+
+
+State 35
+
+   16 Call: '(' T_NAME Args . ')'
+
+    ')'  shift, and go to state 41
+
+
+State 36
+
+   15 Command: T_VAR '=' T_NUM .
+
+    $default  reduce using rule 15 (Command)
+
+
+State 37
+
+   11 Command: "if" Call '[' Body . ']'
+
+    ']'  shift, and go to state 42
+
+
+State 38
+
+   17 Args: T_VAR Args .
+
+    $default  reduce using rule 17 (Args)
+
+
+State 39
+
+   18 Args: T_NUM Args .
+
+    $default  reduce using rule 18 (Args)
+
+
+State 40
+
+   19 Args: Call Args .
+
+    $default  reduce using rule 19 (Args)
+
+
+State 41
+
+   16 Call: '(' T_NAME Args ')' .
+
+    $default  reduce using rule 16 (Call)
+
+
+State 42
+
+   11 Command: "if" Call '[' Body ']' .
+
+    $default  reduce using rule 11 (Command)

@@ -1,0 +1,934 @@
+Terminals unused in grammar
+
+    "int"
+    "real"
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 $@1: %empty
+
+    2 program: "start" T_id $@1 stmts "end"
+
+    3 stmts: '(' stmt ')'
+    4      | '(' stmt ')' stmts
+    5      | '(' error ')' stmts
+
+    6 stmt: asmt
+    7     | printcmd
+
+    8 printcmd: "print" expr
+
+    9 asmt: T_id expr
+
+   10 expr: T_num
+   11     | T_real
+   12     | T_id
+   13     | '(' expr ')'
+
+   14 $@2: %empty
+
+   15 expr: '+' expr $@2 expr
+
+   16 $@3: %empty
+
+   17 expr: '-' expr $@3 expr
+
+   18 $@4: %empty
+
+   19 expr: '*' expr $@4 expr
+
+   20 $@5: %empty
+
+   21 expr: '/' expr $@5 expr
+
+   22 $@6: %empty
+
+   23 expr: "+." expr $@6 expr
+
+   24 $@7: %empty
+
+   25 expr: "-." expr $@7 expr
+
+   26 $@8: %empty
+
+   27 expr: "*." expr $@8 expr
+
+   28 $@9: %empty
+
+   29 expr: "/." expr $@9 expr
+   30     | "ceil" expr
+   31     | "floor" expr
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '(' (40) 3 4 5 13
+    ')' (41) 3 4 5 13
+    '*' (42) 19
+    '+' (43) 15
+    '-' (45) 17
+    '/' (47) 21
+    error (256) 5
+    T_num <lexical> (258) 10
+    T_real <lexical> (259) 11
+    T_id <lexical> (260) 2 9 12
+    "start" (261) 2
+    "end" (262) 2
+    "print" (263) 8
+    "int" (264)
+    "real" (265)
+    "ceil" (266) 30
+    "floor" (267) 31
+    "+." (268) 23
+    "-." (269) 25
+    "*." (270) 27
+    "/." (271) 29
+
+
+Nonterminals, with rules where they appear
+
+    $accept (23)
+        on left: 0
+    program (24)
+        on left: 2
+        on right: 0
+    $@1 (25)
+        on left: 1
+        on right: 2
+    stmts (26)
+        on left: 3 4 5
+        on right: 2 4 5
+    stmt (27)
+        on left: 6 7
+        on right: 3 4
+    printcmd (28)
+        on left: 8
+        on right: 7
+    asmt (29)
+        on left: 9
+        on right: 6
+    expr <se> (30)
+        on left: 10 11 12 13 15 17 19 21 23 25 27 29 30 31
+        on right: 8 9 13 15 17 19 21 23 25 27 29 30 31
+    $@2 (31)
+        on left: 14
+        on right: 15
+    $@3 (32)
+        on left: 16
+        on right: 17
+    $@4 (33)
+        on left: 18
+        on right: 19
+    $@5 (34)
+        on left: 20
+        on right: 21
+    $@6 (35)
+        on left: 22
+        on right: 23
+    $@7 (36)
+        on left: 24
+        on right: 25
+    $@8 (37)
+        on left: 26
+        on right: 27
+    $@9 (38)
+        on left: 28
+        on right: 29
+
+
+State 0
+
+    0 $accept: . program $end
+
+    "start"  shift, and go to state 1
+
+    program  go to state 2
+
+
+State 1
+
+    2 program: "start" . T_id $@1 stmts "end"
+
+    T_id  shift, and go to state 3
+
+
+State 2
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    2 program: "start" T_id . $@1 stmts "end"
+
+    $default  reduce using rule 1 ($@1)
+
+    $@1  go to state 5
+
+
+State 4
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 5
+
+    2 program: "start" T_id $@1 . stmts "end"
+
+    '('  shift, and go to state 6
+
+    stmts  go to state 7
+
+
+State 6
+
+    3 stmts: '(' . stmt ')'
+    4      | '(' . stmt ')' stmts
+    5      | '(' . error ')' stmts
+
+    error    shift, and go to state 8
+    T_id     shift, and go to state 9
+    "print"  shift, and go to state 10
+
+    stmt      go to state 11
+    printcmd  go to state 12
+    asmt      go to state 13
+
+
+State 7
+
+    2 program: "start" T_id $@1 stmts . "end"
+
+    "end"  shift, and go to state 14
+
+
+State 8
+
+    5 stmts: '(' error . ')' stmts
+
+    ')'  shift, and go to state 15
+
+
+State 9
+
+    9 asmt: T_id . expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 30
+
+
+State 10
+
+    8 printcmd: "print" . expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 31
+
+
+State 11
+
+    3 stmts: '(' stmt . ')'
+    4      | '(' stmt . ')' stmts
+
+    ')'  shift, and go to state 32
+
+
+State 12
+
+    7 stmt: printcmd .
+
+    $default  reduce using rule 7 (stmt)
+
+
+State 13
+
+    6 stmt: asmt .
+
+    $default  reduce using rule 6 (stmt)
+
+
+State 14
+
+    2 program: "start" T_id $@1 stmts "end" .
+
+    $default  reduce using rule 2 (program)
+
+
+State 15
+
+    5 stmts: '(' error ')' . stmts
+
+    '('  shift, and go to state 6
+
+    stmts  go to state 33
+
+
+State 16
+
+   10 expr: T_num .
+
+    $default  reduce using rule 10 (expr)
+
+
+State 17
+
+   11 expr: T_real .
+
+    $default  reduce using rule 11 (expr)
+
+
+State 18
+
+   13 expr: '(' . expr ')'
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 34
+
+
+State 19
+
+   12 expr: T_id .
+
+    $default  reduce using rule 12 (expr)
+
+
+State 20
+
+   30 expr: "ceil" . expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 35
+
+
+State 21
+
+   31 expr: "floor" . expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 36
+
+
+State 22
+
+   23 expr: "+." . expr $@6 expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 37
+
+
+State 23
+
+   25 expr: "-." . expr $@7 expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 38
+
+
+State 24
+
+   27 expr: "*." . expr $@8 expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 39
+
+
+State 25
+
+   29 expr: "/." . expr $@9 expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 40
+
+
+State 26
+
+   15 expr: '+' . expr $@2 expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 41
+
+
+State 27
+
+   17 expr: '-' . expr $@3 expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 42
+
+
+State 28
+
+   19 expr: '*' . expr $@4 expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 43
+
+
+State 29
+
+   21 expr: '/' . expr $@5 expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 44
+
+
+State 30
+
+    9 asmt: T_id expr .
+
+    $default  reduce using rule 9 (asmt)
+
+
+State 31
+
+    8 printcmd: "print" expr .
+
+    $default  reduce using rule 8 (printcmd)
+
+
+State 32
+
+    3 stmts: '(' stmt ')' .
+    4      | '(' stmt ')' . stmts
+
+    '('  shift, and go to state 6
+
+    $default  reduce using rule 3 (stmts)
+
+    stmts  go to state 45
+
+
+State 33
+
+    5 stmts: '(' error ')' stmts .
+
+    $default  reduce using rule 5 (stmts)
+
+
+State 34
+
+   13 expr: '(' expr . ')'
+
+    ')'  shift, and go to state 46
+
+
+State 35
+
+   30 expr: "ceil" expr .
+
+    $default  reduce using rule 30 (expr)
+
+
+State 36
+
+   31 expr: "floor" expr .
+
+    $default  reduce using rule 31 (expr)
+
+
+State 37
+
+   23 expr: "+." expr . $@6 expr
+
+    $default  reduce using rule 22 ($@6)
+
+    $@6  go to state 47
+
+
+State 38
+
+   25 expr: "-." expr . $@7 expr
+
+    $default  reduce using rule 24 ($@7)
+
+    $@7  go to state 48
+
+
+State 39
+
+   27 expr: "*." expr . $@8 expr
+
+    $default  reduce using rule 26 ($@8)
+
+    $@8  go to state 49
+
+
+State 40
+
+   29 expr: "/." expr . $@9 expr
+
+    $default  reduce using rule 28 ($@9)
+
+    $@9  go to state 50
+
+
+State 41
+
+   15 expr: '+' expr . $@2 expr
+
+    $default  reduce using rule 14 ($@2)
+
+    $@2  go to state 51
+
+
+State 42
+
+   17 expr: '-' expr . $@3 expr
+
+    $default  reduce using rule 16 ($@3)
+
+    $@3  go to state 52
+
+
+State 43
+
+   19 expr: '*' expr . $@4 expr
+
+    $default  reduce using rule 18 ($@4)
+
+    $@4  go to state 53
+
+
+State 44
+
+   21 expr: '/' expr . $@5 expr
+
+    $default  reduce using rule 20 ($@5)
+
+    $@5  go to state 54
+
+
+State 45
+
+    4 stmts: '(' stmt ')' stmts .
+
+    $default  reduce using rule 4 (stmts)
+
+
+State 46
+
+   13 expr: '(' expr ')' .
+
+    $default  reduce using rule 13 (expr)
+
+
+State 47
+
+   23 expr: "+." expr $@6 . expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 55
+
+
+State 48
+
+   25 expr: "-." expr $@7 . expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 56
+
+
+State 49
+
+   27 expr: "*." expr $@8 . expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 57
+
+
+State 50
+
+   29 expr: "/." expr $@9 . expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 58
+
+
+State 51
+
+   15 expr: '+' expr $@2 . expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 59
+
+
+State 52
+
+   17 expr: '-' expr $@3 . expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 60
+
+
+State 53
+
+   19 expr: '*' expr $@4 . expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 61
+
+
+State 54
+
+   21 expr: '/' expr $@5 . expr
+
+    T_num    shift, and go to state 16
+    T_real   shift, and go to state 17
+    '('      shift, and go to state 18
+    T_id     shift, and go to state 19
+    "ceil"   shift, and go to state 20
+    "floor"  shift, and go to state 21
+    "+."     shift, and go to state 22
+    "-."     shift, and go to state 23
+    "*."     shift, and go to state 24
+    "/."     shift, and go to state 25
+    '+'      shift, and go to state 26
+    '-'      shift, and go to state 27
+    '*'      shift, and go to state 28
+    '/'      shift, and go to state 29
+
+    expr  go to state 62
+
+
+State 55
+
+   23 expr: "+." expr $@6 expr .
+
+    $default  reduce using rule 23 (expr)
+
+
+State 56
+
+   25 expr: "-." expr $@7 expr .
+
+    $default  reduce using rule 25 (expr)
+
+
+State 57
+
+   27 expr: "*." expr $@8 expr .
+
+    $default  reduce using rule 27 (expr)
+
+
+State 58
+
+   29 expr: "/." expr $@9 expr .
+
+    $default  reduce using rule 29 (expr)
+
+
+State 59
+
+   15 expr: '+' expr $@2 expr .
+
+    $default  reduce using rule 15 (expr)
+
+
+State 60
+
+   17 expr: '-' expr $@3 expr .
+
+    $default  reduce using rule 17 (expr)
+
+
+State 61
+
+   19 expr: '*' expr $@4 expr .
+
+    $default  reduce using rule 19 (expr)
+
+
+State 62
+
+   21 expr: '/' expr $@5 expr .
+
+    $default  reduce using rule 21 (expr)

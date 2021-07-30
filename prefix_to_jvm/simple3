@@ -1,0 +1,8 @@
+start simple3
+(x 1.0)
+(print x)
+(y 1)
+(print y)
+(x + y 1)
+(print x)
+end

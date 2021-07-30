@@ -1,0 +1,20 @@
+
+("widget" object)
+("debug" string)
+("window" object)
+("title" string)
+("name" string)
+("width" int)
+("height" int)
+
+
+{"widget": {
+    "debug": "on",
+    "window": {
+        "title": "Sample Konfabulator Widget",
+        "name": "main_window",
+        "width": 500,
+        "height": 500
+        }
+    }
+}

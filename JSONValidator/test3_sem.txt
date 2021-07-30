@@ -1,0 +1,21 @@
+("menu" object)
+("id" string)
+("value" string)
+("popup" object)
+("menuitem" array 3)
+("onclick" string)
+("steady" const)
+
+
+{"menu":  {
+  "id": "file",
+  "value": "File",
+  "steady" : true,
+  "popup": {
+    "menuitem": [
+      {"value": "New", "onclick": "CreateNewDoc()"},
+      {"value": "Open", "onclick": "OpenDoc()"},
+      {"value": "Close", "onclick": "CloseDoc()"}
+    ]
+  }
+}}

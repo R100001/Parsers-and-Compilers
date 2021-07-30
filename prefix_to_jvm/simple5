@@ -1,0 +1,6 @@
+start simple5
+(x (+. 3 (ceil 3.8)))
+(print x)
+(y (- 3 (ceil 4)))
+(print y)
+end
